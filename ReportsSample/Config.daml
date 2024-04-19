@@ -1,0 +1,46 @@
+﻿<ArcGIS defaultAssembly="ReportsSample.dll" defaultNamespace="ReportsSample" xmlns="http://schemas.esri.com/DADF/Registry" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.esri.com/DADF/Registry file:///C:/Program%20Files/ArcGIS/Pro/bin/ArcGIS.Desktop.Framework.xsd">
+  <AddInInfo id="{7a3a7b72-267c-4faf-b57f-e6925d86de30}" version="1.0" desktopVersion="3.1.41833">
+    <Name>ReportsSample</Name>
+    <Description>ReportsSample description</Description>
+    <Image>Images\AddinDesktop32.png</Image>
+    <Author>SUHGAD</Author>
+    <Company>DNV</Company>
+    <Date>3/21/2024 4:46:22 PM</Date>
+    <Subject>Framework</Subject>
+    <!-- Note subject can be one or more of these topics:
+                    Content, Framework, Editing, Geodatabase, Geometry, Geoprocessing, Layouts, Map Authoring, Map Exploration -->
+  </AddInInfo>
+  <modules>
+    <insertModule id="ReportsSample_Module" className="Module1" autoLoad="false" caption="Module1">
+      <!-- uncomment to have the control hosted on a separate tab-->
+      <tabs>
+        <!--<tab id="ReportsSample_Tab1" caption="New Tab">
+          <group refID="ReportsSample_Group1"/>
+        </tab>-->
+      </tabs>
+      <groups>
+        <!-- comment this out if you have no controls on the Addin tab to avoid
+              an empty group-->
+        <group id="ReportsSample_Group1" caption="Group 1" appearsOnAddInTab="true">
+          <!-- host controls within groups -->
+          <button refID="ReportsSample_Button1" size="large" />
+          <!--<button refID="ReportsSample_Views_CreateReport_ShowButton" size="large" />-->
+        </group>
+      </groups>
+      <controls>
+        <!-- add your controls here -->
+        <button id="ReportsSample_Button1" caption="Run" className="Button1" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonBlue32.png">
+          <tooltip heading="Tooltip Heading">Tooltip text<disabledText /></tooltip>
+        </button>
+        <button id="ReportsSample_Views_CreateReport_ShowButton" caption="Show CreateReport" className="ReportsSample.Views.CreateReport_ShowButton" loadOnClick="true" smallImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple16.png" largeImage="pack://application:,,,/ArcGIS.Desktop.Resources;component/Images/GenericButtonPurple32.png">
+          <tooltip heading="Show Dockpane">Show Dockpane<disabledText /></tooltip>
+        </button>
+      </controls>
+      <dockPanes>
+        <dockPane id="ReportsSample_Views_CreateReport" caption="CreateReport" className="ReportsSample.Views.CreateReportViewModel" dock="group" dockWith="esri_core_projectDockPane">
+          <content className="ReportsSample.Views.CreateReportView" />
+        </dockPane>
+      </dockPanes>
+    </insertModule>
+  </modules>
+</ArcGIS>
