@@ -19,8 +19,16 @@ namespace ReportsSample
         {
             try
             {
+                // Create FC, add data into it to prepare datassource for report 
                 FeatureLayer layer = await FeatureClassHelper.CreateFeatureLayer();
+
+                // Create new report using FeatureLayer as datasource
                 var report = await ReportHelper.CreateReport(layer);
+
+                // Adding element in section 
+                
+                await ReportHelper.TestCreateTextElement(report);
+
                 await ReportHelper.AddFieldsInPageHeaderAsync(report);
 
                 MessageBox.Show("Report created successfuly.");

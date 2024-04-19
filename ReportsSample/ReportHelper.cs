@@ -1,13 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Collections.Generic;
-
 using ArcGIS.Desktop.Mapping;
 using ArcGIS.Core.CIM;
 using ArcGIS.Desktop.Reports;
 using ArcGIS.Desktop.Framework.Threading.Tasks;
-using System.Windows.Documents;
-using System;
-using System.Linq;
 using ArcGIS.Core.Geometry;
 using ArcGIS.Core.Internal.Geometry;
 
@@ -69,6 +67,7 @@ namespace ReportsSample
             });
         }
 
+        // Solution to update the column header //not working
         //public static void ChangeHeader(Report report)
         //{
         //    if (report == null) return;
@@ -100,6 +99,30 @@ namespace ReportsSample
         //    }
         //}
 
+        public static async Task TestCreateTextElement(Report report)
+        {
+            await QueuedTask.Run(() =>
+            {
+                if (report != null)
+                {
+                    // Set any text.
+                    var textElement = "Hello world!";
+                    // Get the "ReportSection".
+                    var mainReportSection = report.Elements.OfType<ReportSection>().FirstOrDefault();
+                    if (mainReportSection == null) return;
+                    // Get the "ReportFooter" within the ReportSection.
+                    var reportFooterSection = mainReportSection?.Elements.OfType<ReportFooter>().FirstOrDefault();
+                    if (reportFooterSection == null) return;
+                    // Create "Envelope" coordinates for element location.
+                    var newMinPoint = new Coordinate2D(0, 2.38);
+                    var newMaxPoint = new Coordinate2D(3.75, 2.5);
+                    Envelope newElementEnvelope = EnvelopeBuilder.CreateEnvelope(newMinPoint, newMaxPoint);
+                    // Create the "RectangleParagraphGraphicElement" graphic.
+                    var ElementGraphic = ReportElementFactory.Instance.CreateRectangleParagraphGraphicElement(reportFooterSection, newElementEnvelope, textElement);
+                }
+            });
+        }
+
         internal static async Task AddFieldsInPageHeaderAsync(Report report)
         {
             await QueuedTask.Run(() =>
@@ -114,19 +137,12 @@ namespace ReportsSample
                     textElement += Environment.NewLine + "Field 2: Field2 value";
                     textElement += Environment.NewLine + "Field 3: Field3 value";
 
-                    var oldEnv = mainReportSection.GetBounds();
-                    var newMinPoint = new Coordinate2D(oldEnv.XMin + 0.5, oldEnv.YMin + 0.5);
-                    var newMaxPoint = new Coordinate2D(oldEnv.XMax - 0.5, oldEnv.YMax - 0.5);
+                    var newMinPoint = new Coordinate2D(1, 2.38);
+                    var newMaxPoint = new Coordinate2D(3.75, 2.5);
                     Envelope newElementEnvelope = EnvelopeBuilder.CreateEnvelope(newMinPoint, newMaxPoint);
-                    // Create the "RectangleParagraphGraphicElement" graphic.
                     var ElementGraphic = ReportElementFactory.Instance.CreateRectangleParagraphGraphicElement(reportPageHeader, newElementEnvelope, textElement);
                 }
             });
-
-        }
-
-        private static void UpdateReport()
-        {
 
         }
 
